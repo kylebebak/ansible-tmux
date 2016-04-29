@@ -1,6 +1,6 @@
 ---
 update: false
-install: false
+install: true
 
 tmux_config: true
 tmux_upgrade: true

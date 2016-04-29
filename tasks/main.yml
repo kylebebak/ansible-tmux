@@ -6,9 +6,13 @@
   apt: update_cache=yes
   when: update
 
-- name: Install tmux
-  apt: name=tmux state=present
+- name: Install tmux and git
+  apt: name={{ item }} state=present
+  with_items:
+    - tmux
+    - git
   when: install
+  become: true
 
 
 - name: Enable history sharing in .bashrc
@@ -38,12 +42,13 @@
     - add-apt-repository -y ppa:pi-rho/dev
     - apt-get update
     - apt-get install -y tmux=2.0-1~ppa1~t
-  when: tmux_upgrade and tmux_version.rc == 1
+  when: tmux_upgrade and tmux_version.stdout|trim == "1"
   become: yes
 
 - name: Install tmux plugin manager
   git: repo=https://github.com/tmux-plugins/tpm dest="{{ home_path }}/.tmux/plugins/tpm" update=yes
   when: tmux_plugin_manager
+
 
 - name: Copy over .tmux.conf
   template:
