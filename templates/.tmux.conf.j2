@@ -1,0 +1,131 @@
+# automatically renumber windows whenever a window is closed
+set-option -g renumber-windows on
+
+set -g utf8
+set-window-option -g utf8 on
+
+# enable history
+set -g history-limit 10000
+
+# cambiando el delay al mandar comandos
+set -s escape-time 1
+
+# el índice de las windows empieza en 1
+set -g base-index 1
+
+# el índice de los panes empieza en 1
+set -g pane-base-index 1
+
+# ctrl-b r recarga el archivo de configuración de tmux
+bind r source-file ~/.tmux.conf \; display ".tmux.conf reloaded"
+
+
+
+# para usarlo con aplicaciones (hay que presionar dos veces)
+bind C-b send-prefix
+
+
+## división de la window
+# divide la pantalla horizontalmente
+bind | split-window -h
+
+# divide la pantalla verticalmente
+bind - split-window -v
+
+
+# movimiento entre panes
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+
+# kill window
+bind k kill-window
+
+
+# movimiento circular entre windows
+bind -r C-h select-window -t :-
+bind -r C-l select-window -t :+
+
+# cambiando el tamaño de los panes
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+
+set -g default-terminal "screen-256color"
+
+# color de la barra de estatus
+set -g status-fg white
+set -g status-bg black
+
+# lista de windows
+setw -g window-status-fg cyan
+setw -g window-status-bg default
+setw -g window-status-attr dim
+
+# window activa
+setw -g window-status-current-fg white
+setw -g window-status-current-bg red
+setw -g window-status-current-attr bright
+
+# colores de los panes
+set -g pane-border-fg green
+set -g pane-border-bg black
+
+set -g pane-active-border-fg white
+set -g pane-active-border-bg yellow
+
+
+# mensaje
+set -g message-fg white
+set -g message-bg black
+set -g message-attr bright
+
+
+# despliegue de la barra de estatus
+set -g status-utf8 on
+
+
+
+# actualización de la barra
+set -g status-interval 60
+
+# centrar la lista de windows
+set -g status-justify centre
+
+
+
+# monitorizar la actividad en las windows
+setw -g monitor-activity on
+set -g visual-activity on
+
+
+
+
+# quick window navigation
+#########################
+
+# reorder windows
+bind-key -n C-S-Left swap-window -t -1
+bind-key -n C-S-Right swap-window -t +1
+
+# move to next or previous window
+bind-key -n S-Left previous-window
+bind-key -n S-Right next-window
+
+
+# enable mouse scroll, this works for ubuntu 14.04 tmux 1.8
+set -g mode-mouse on
+
+
+# tmux plugins
+#########################
+{% for plugin in tmux_plugins %}
+{{ plugin }}
+{% endfor %}
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+{{ "run '~/.tmux/plugins/tpm/tpm'" if tmux_plugin_manager else '' }}

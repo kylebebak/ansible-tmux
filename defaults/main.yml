@@ -1,0 +1,12 @@
+---
+update: false
+install: true
+
+tmux_config: true
+tmux_upgrade: true
+tmux_plugin_manager: true
+tmux_plugins:
+  - set -g @plugin 'tmux-plugins/tmux-resurrect'
+
+share_history: true
+aliases: true
