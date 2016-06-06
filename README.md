@@ -7,7 +7,9 @@ It also ensures that history is shared between `tmux` windows using [this method
 ## Installation
 
 ~~~sh
-ansible-galaxy install kylebebak.tmux
+sudo ansible-galaxy install kylebebak.tmux
+# to update
+sudo ansible-galaxy install kylebebak.tmux --force
 ~~~
 
 ## Variables
